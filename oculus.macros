@@ -1,0 +1,183 @@
+!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
+
+! this file, ext.F90, has been constructed by macro expansion; see ext.h for source;
+
+!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!
+
+m4_changequote({,})m4_dnl ; can put comments here;
+m4_changecom(!)m4_dnl ; can put comments here;
+m4_define(INTEGER,integer)m4_dnl ; can put comments here;
+m4_define(REAL,real)m4_dnl ; can put comments here;
+m4_define(CHARACTER,character)m4_dnl ; can put comments here;
+m4_define(RALLOCATE,{
+
+!macro expansion of rallocate
+
+#ifdef DEBUG
+
+   if( allocated($1) ) then
+    cput = zero
+    write(0,'("macros : ",f10.2," : myid=",i3," ; $1 already allocated ;")') cput-cpus, myid
+    stop '$1 allocated'
+   endif
+
+   if( Wmacros ) write(ounit,'("macros : ", 10x ," : myid=",i3," ; allocating $1 ;")') myid
+
+#endif
+
+   allocate( $1$2, stat=astat )
+
+#ifdef DEBUG
+
+   if( astat.ne.0 ) then
+    cput = zero
+    write(0,'("macros : ",f10.2," : myid=",i3," ; error allocating $1 ;")') cput-cpus, myid
+    stop 'error allocating $1'
+   endif
+
+   if( Wmacros ) write(ounit,'("macros : ", 10x ," : myid=",i3," ; allocated  $1 ;")') myid
+
+#endif
+
+   $1$2 = zero
+
+})m4_dnl ; can put comments here;
+m4_define(IALLOCATE,{
+
+!macro expansion of iallocate
+
+#ifdef DEBUG
+
+   if( allocated($1) ) then
+    cput = zero
+    write(0,'("macros : ",f10.2," : myid=",i3," ; $1 already allocated ;")') cput-cpus, myid
+    stop '$1 allocated'
+   endif
+
+   if( Wmacros ) write(ounit,'("macros : ", 10x ," : myid=",i3," ; allocating $1 ;")') myid
+
+#endif
+
+   allocate( $1$2, stat=astat )
+
+#ifdef DEBUG
+
+   if( astat.ne.0 ) then
+    cput = zero
+    write(0,'("macros : ",f10.2," : myid=",i3," ; error allocating $1 ;")') cput-cpus, myid
+    stop 'error allocating $1'
+   endif
+
+   if( Wmacros ) write(ounit,'("macros : ", 10x ," : myid=",i3," ; allocated  $1 ;")') myid
+
+#endif
+
+   $1$2 = 0
+
+})m4_dnl ; can put comments here;
+m4_define(LALLOCATE,{
+
+!macro expansion of lallocate
+
+#ifdef DEBUG
+
+   if(allocated($1)) then
+    cput = zero
+    write(0,'("macros : ",f10.2," : myid=",i3," ; $1 already allocated ;")') cput-cpus, myid
+    stop '$1 allocated'
+   endif
+
+   if( Wmacros ) write(ounit,'("macros : ", 10x ," : myid=",i3," ; allocating $1 ;")') myid
+
+#endif
+
+   allocate($1$2,stat=astat)
+
+#ifdef DEBUG
+
+   if( astat.ne.0 ) then
+    cput = zero
+    write(0,'("macros : ",f10.2," : myid=",i3," ; error allocating $1 ;")') cput-cpus, myid
+    stop 'error allocating $1'
+   endif
+
+   if( Wmacros ) write(ounit,'("macros : ", 10x ," : myid=",i3," ; allocated  $1 ;")') myid
+
+#endif
+
+   $1$2 = .false.
+
+})m4_dnl ; can put comments here;
+m4_define(ALLOCATE,{
+
+!macro expansion of allocate
+
+#ifdef DEBUG
+
+   if( allocated($1) ) then
+    cput = zero
+    write(0,'("macros : ",f10.2," : myid=",i3," ; $1 already allocated ;")') cput-cpus, myid
+    stop '$1 allocated'
+   endif
+
+   if( Wmacros ) write(ounit,'("macros : ", 10x ," : myid=",i3," ; allocating $1 ;")') myid
+
+#endif
+
+   allocate($1$2,stat=astat)
+
+#ifdef DEBUG
+
+   if( astat.ne.0 ) then
+    cput = zero
+    write(0,'("macros : ",f10.2," : myid=",i3," ; error allocating $1 ;")') cput-cpus, myid
+    stop 'error allocating $1'
+   endif
+
+   if( Wmacros ) write(ounit,'("macros : ", 10x ," : myid=",i3," ; allocated  $1 ;")') myid
+
+#endif
+
+})m4_dnl ; can put comments here;
+m4_define(DEALLOCATE,{
+
+!macro expansion of deallocate
+
+#ifdef DEBUG
+
+   if( .not.allocated($1) ) then
+    cput = zero
+    write(0,'("macros : ",f10.2," : myid=",i3," ; $1 not allocated ;")') cput-cpus, myid
+    stop '$1 allocated'
+   endif
+
+   if( Wmacros ) write(ounit,'("macros : ", 10x ," : myid=",i3," ; de-allocating $1 ;")') myid
+
+#endif
+
+   deallocate($1,stat=astat)
+
+#ifdef DEBUG
+
+   if( astat.ne.0 ) then
+    cput = zero
+    write(0,'("macros : ",f10.2," : myid=",i3," ; error de-allocating $1 ;")') cput-cpus, myid
+    stop 'error allocating $1'
+
+   endif
+
+   if( Wmacros ) write(ounit,'("macros : ", 10x ," : myid=",i3," ; de-allocated  $1 ;")') myid
+
+#endif
+
+})m4_dnl ; can put comments here;
+m4_define(FATALERROR,
+
+!macro expansion of fatalerror
+
+   if( $2 ) then
+     write(0,'("$1 :      fatal : $2 ; $3 ;")')
+     stop "$1 : $2 ; $3 ;"
+    endif
+
+)m4_dnl ; can put comments here;
